@@ -89,7 +89,7 @@ export class LlamaParse implements INodeType {
             {
                 displayName: 'API key',
                 name: 'apiKey',
-                type: 'string',
+                type: 'credentials',
                 required: true,
                 displayOptions: {
                     show: {
@@ -113,6 +113,7 @@ export class LlamaParse implements INodeType {
         const returnData = [];
         const resource = this.getNodeParameter('resource', 0) as string;
         const operation = this.getNodeParameter('operation', 0) as string;
+        
         // For each item, make an API call to create a contact
         for (let i = 0; i < items.length; i++) {
             if (resource === 'parsing') {
