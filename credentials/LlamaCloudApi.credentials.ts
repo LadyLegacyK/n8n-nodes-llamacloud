@@ -5,8 +5,8 @@ import {
 	INodeProperties,
 } from 'n8n-workflow';
 
-export class LlamaParseApi implements ICredentialType {
-	name = 'LlamaParseApi';
+export class LlamaCloudApi implements ICredentialType {
+	name = 'LlamaCloudApi';
 	displayName = 'LlamaCloud API Key';
 	properties: INodeProperties[] = [
 		{
