@@ -13,7 +13,7 @@ import {
 export class LlamaParse implements INodeType {
 	description: INodeTypeDescription = {
 		displayName: 'LlamaParse',
-        name: 'LlamaParse',
+        name: 'LlamaCloud',
         icon: 'file:llamacloud.svg',
         group: ['transform'],
         version: 1,
