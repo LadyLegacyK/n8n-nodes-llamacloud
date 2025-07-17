@@ -12,10 +12,10 @@ import {
 } from "llamaindex"
 
 
-export class ChatWithIndex implements INodeType {
+export class LlamaCloudChat implements INodeType {
 	description: INodeTypeDescription = {
 		displayName: 'LlamaCloud Chat',
-        name: 'LlamaCloud',
+        name: 'LlamaCloud Index',
         icon: 'file:llamacloud.svg',
         group: ['action'],
         version: 1,
@@ -28,22 +28,13 @@ export class ChatWithIndex implements INodeType {
         credentials: [
             {
                 name: "LlamaCloudApi",
-                required: false,
+                required: true,
             }
         ],
 		properties: [
-            {
-                displayName: 'API key',
-                name: 'apiKey',
-                type: 'string',
-                required: true,
-                default:'',
-                placeholder: 'llx-***',
-                description:'LlamaCloud API key',
-            },
 			{
                 displayName: 'Index Name',
-                name: 'Index name',
+                name: 'indexName',
                 type: 'string',
                 required: true,
                 default:'',
@@ -55,10 +46,10 @@ export class ChatWithIndex implements INodeType {
 	// The execute method will go here
 	async execute(this: IExecuteFunctions): Promise<INodeExecutionData[][]> {
 		// Get parameters from node
-		const apiKey = this.getNodeParameter('apiKey', 0) as string;
-		const indexName = this.getNodeParameter('Index name', 0) as string;
+		const credentials = await this.getCredentials("LlamaCloudApi");
+        const apiKey = credentials.apiKey as string;
+		const indexName = this.getNodeParameter('indexName', 0) as string;
 		const items = this.getInputData();
-		console.log('Input items:', items);
 		const chatMessage = typeof items[0].json.chatInput === 'string'
 		? items[0].json.chatInput
 		: '';

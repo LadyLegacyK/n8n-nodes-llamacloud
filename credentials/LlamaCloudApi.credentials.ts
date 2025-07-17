@@ -21,6 +21,7 @@ export class LlamaCloudApi implements ICredentialType {
 		type: 'generic',
 		properties: {
 			headers: {
+				Accept: 'application/json',
 				Authorization: '=Bearer {{$credentials.apiKey}}',
 			},
 		},
@@ -28,7 +29,7 @@ export class LlamaCloudApi implements ICredentialType {
 
 	test: ICredentialTestRequest = {
 		request: {
-			baseURL: 'https://api.cloud.llamaindex.ai/api/v1/',
+			baseURL: 'https://api.cloud.llamaindex.ai/api/v1/projects',
 		},
 	};
 }

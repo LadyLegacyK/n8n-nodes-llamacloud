@@ -7,19 +7,19 @@ import {
 } from 'n8n-workflow';
 
 import {
-    LlamaParseReader
-} from "llamaindex"
+    extractDataFromFile,
+} from "./utils";
 
-export class LlamaParse implements INodeType {
+export class LlamaExtract implements INodeType {
 	description: INodeTypeDescription = {
-		displayName: 'LlamaParse',
-        name: 'LlamaCloud',
+		displayName: 'LlamaExtract',
+        name: 'LlamaExtract',
         icon: 'file:llamacloud.svg',
         group: ['transform'],
         version: 1,
-        description: 'Parse PDF files and get their content in markdown!',
+        description: 'Extract content from files through LlamaExtract agents!',
         defaults: {
-            name: 'LlamaParse',
+            name: 'LlamaExtract',
         },
         inputs: [NodeConnectionType.Main],
         outputs: [NodeConnectionType.Main],
@@ -36,14 +36,14 @@ export class LlamaParse implements INodeType {
                 type: 'options',
                 options: [
                     {
-                        name: 'Parse the File',
-                        value: 'parsing',
+                        name: 'Extract Data',
+                        value: 'extracting',
                     },
                 ],
-                default: 'parsing',
+                default: 'extracting',
                 noDataExpression: true,
                 required: true,
-                description: 'Parse a PDF file and get the markdown content!',
+                description: 'Extract Data From a File and Get Elegant Structured Information about it.',
             },
             {
                 displayName: 'Operation',
@@ -52,20 +52,39 @@ export class LlamaParse implements INodeType {
                 displayOptions: {
                     show: {
                         resource: [
-                            'parsing',
+                            'extracting',
                         ],
                     },
                 },
                 options: [
                     {
-                        name: 'Parse',
-                        value: 'parse',
-                        description: 'Parse a PDF File',
-                        action: 'Parse a PDF File',
+                        name: 'Extract',
+                        value: 'extract',
+                        description: 'Extract Data from a File',
+                        action: 'Extract Data from a File',
                     },
                 ],
-                default: 'parse',
+                default: 'extract',
                 noDataExpression: true,
+            },
+             {
+                displayName: 'Agent Id',
+                name: 'agentId',
+                type: 'string',
+                required: true,
+                displayOptions: {
+                    show: {
+                        operation: [
+                            'extract',
+                        ],
+                        resource: [
+                            'extracting',
+                        ],
+                    },
+                },
+                default:'',
+                placeholder: '',
+                description:'Extraction Agent Id',
             },
             {
                 displayName: 'File Path',
@@ -75,10 +94,10 @@ export class LlamaParse implements INodeType {
                 displayOptions: {
                     show: {
                         operation: [
-                            'parse',
+                            'extract',
                         ],
                         resource: [
-                            'parsing',
+                            'extracting',
                         ],
                     },
                 },
@@ -97,23 +116,19 @@ export class LlamaParse implements INodeType {
         
         // For each item, make an API call to create a contact
         for (let i = 0; i < items.length; i++) {
-            if (resource === 'parsing') {
-                if (operation === 'parse') {
+            if (resource === 'extracting') {
+                if (operation === 'extract') {
                     // Get email input
                     const filePath = this.getNodeParameter('filePath', i) as string;
                     // Get additional fields input
-                    const credentials = await this.getCredentials("LlamaCloudApi")
+                    const credentials = await this.getCredentials("LlamaCloudApi");
                     const apiKey = credentials.apiKey as string;
                     
-                    const reader = new LlamaParseReader(
-                        { resultType: "markdown", apiKey: apiKey }
-                    )
+                    const agentId = this.getNodeParameter('agentId', i) as string;
                     
-                    const documents = await reader.loadData(filePath);
+                    const result = await extractDataFromFile(apiKey, agentId, filePath)
                     
-                    for (let j = 0; j < documents.length; j++) {
-                        returnData.push(documents[i].toJSON())
-                    }    
+                    returnData.push(result)  
                 }
             }
         }
