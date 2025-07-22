@@ -12,16 +12,16 @@ import {
 } from "llamaindex"
 
 
-export class LlamaCloudChat implements INodeType {
+export class LlamaCloud implements INodeType {
 	description: INodeTypeDescription = {
-		displayName: 'LlamaCloud Chat',
-        name: 'LlamaCloud Index',
+		displayName: 'LlamaCloud',
+        name: 'LlamaCloud',
         icon: 'file:llamacloud.svg',
         group: ['action'],
         version: 1,
-        description: 'Chat with your LlamaCloud Index',
+        description: 'Retrieve context from your LlamaCloud Index',
         defaults: {
-            name: 'LlamaCloud Index',
+            name: 'LlamaCloud',
         },
         inputs: [NodeConnectionType.Main],
         outputs: [NodeConnectionType.Main],
