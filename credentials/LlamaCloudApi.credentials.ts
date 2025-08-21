@@ -7,7 +7,7 @@ import {
 
 export class LlamaCloudApi implements ICredentialType {
 	name = 'llamaCloudApi';
-	displayName = 'LlamaCloud API Key API';
+	displayName = 'LlamaCloud API Key';
 	documentationUrl = 'https://cloud.docs.llamaindex.ai/llamacloud/';
 	properties: INodeProperties[] = [
 		{
