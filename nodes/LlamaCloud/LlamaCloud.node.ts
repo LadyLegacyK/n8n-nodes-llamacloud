@@ -15,7 +15,7 @@ import {
 export class LlamaCloud implements INodeType {
 	description: INodeTypeDescription = {
 		displayName: 'LlamaCloud',
-        name: 'LlamaCloud',
+        name: 'llamaCloud',
         icon: 'file:llamacloud.svg',
         group: ['action'],
         version: 1,

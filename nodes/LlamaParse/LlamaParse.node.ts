@@ -13,7 +13,7 @@ import {
 export class LlamaParse implements INodeType {
 	description: INodeTypeDescription = {
 		displayName: 'LlamaParse',
-        name: 'LlamaCloud',
+        name: 'llamaParse',
         icon: 'file:llamacloud.svg',
         group: ['transform'],
         version: 1,
@@ -61,7 +61,7 @@ export class LlamaParse implements INodeType {
                         name: 'Parse',
                         value: 'parse',
                         description: 'Parse a PDF File',
-                        action: 'Parse a PDF File',
+                        action: 'Parse a pdf file',
                     },
                 ],
                 default: 'parse',
